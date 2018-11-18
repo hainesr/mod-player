@@ -13,6 +13,12 @@ require 'bundler/setup'
 
 require 'audio/portaudio'
 require 'ffi/openmpt'
+require 'curses'
+
+Curses.init_screen
+Curses.noecho
+window = Curses.stdscr
+window.nodelay = true
 
 file = ARGV[0].chomp
 mod = ::FFI::OpenMPT::Module.new(file)
@@ -36,6 +42,7 @@ at_exit do
   buffer.free
   audio.stop
   mod.close
+  Curses.close_screen
 
   puts 'Module end...'
 end
@@ -67,4 +74,7 @@ loop do
   break unless has_read.positive?
 
   audio.write(buffer, has_read)
+
+  ch = window.getch
+  exit if ch == 'q'
 end

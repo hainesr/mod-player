@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    curses (1.2.5)
     ffi (1.9.25)
     ffi-openmpt (0.2.0)
       ffi (~> 1.9)
@@ -11,6 +12,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  curses (~> 1.2)
   ffi-openmpt (~> 0.2)
   ffi-portaudio (~> 0.1)
 
