@@ -5,14 +5,19 @@
 #
 # Licensed under the BSD License. See LICENCE for details.
 
+lib = File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 require 'rubygems'
 require 'bundler/setup'
 
+require 'audio/portaudio'
 require 'ffi/openmpt'
-require 'ffi-portaudio'
 
 file = ARGV[0].chomp
 mod = ::FFI::OpenMPT::Module.new(file)
+
+audio = ModPlayer::PortAudio.new
 
 duration = mod.duration
 duration_mins = duration.floor / 60
@@ -21,35 +26,18 @@ duration_secs = duration % 60
 puts mod.title
 puts "#{duration_mins}:#{duration_secs.round(3)}"
 
-::FFI::PortAudio::API.Pa_Initialize
-stream = ::FFI::Buffer.new(:pointer)
-frames = ::FFI::PortAudio::API::FramesPerBufferUnspecified
-flags = ::FFI::PortAudio::API::NoFlag
-channels = 2
-
-input = nil
-output = ::FFI::PortAudio::API::PaStreamParameters.new
-output[:device] = ::FFI::PortAudio::API.Pa_GetDefaultOutputDevice
-output[:suggestedLatency] = ::FFI::PortAudio::API.Pa_GetDeviceInfo(output[:device])[:defaultHighOutputLatency]
-output[:hostApiSpecificStreamInfo] = nil
-output[:channelCount] = channels
-output[:sampleFormat] = ::FFI::PortAudio::API::Float32
-
-::FFI::PortAudio::API.Pa_OpenStream(stream, input, output, mod.sample_rate, frames, flags, nil, nil)
-::FFI::PortAudio::API.Pa_StartStream(stream.read_pointer)
-
-buffer_max_frames = ::FFI::PortAudio::API.Pa_GetStreamWriteAvailable(stream.read_pointer) * 2
+audio.start
 
 # Set buffer to zero to begin with so we can render slience to start with.
-buffer = ::FFI::MemoryPointer.new(:float, buffer_max_frames * channels, true)
+buffer_max_frames = audio.write_available * 2
+buffer = ::FFI::MemoryPointer.new(:float, buffer_max_frames * audio.channels, true)
 
 at_exit do
-  puts 'Module end...'
-
   buffer.free
-  ::FFI::PortAudio::API.Pa_CloseStream(stream.read_pointer)
-  ::FFI::PortAudio::API.Pa_Terminate
+  audio.stop
   mod.close
+
+  puts 'Module end...'
 end
 
 err_free_limit = 20
@@ -58,21 +46,19 @@ err_free_count = 0
 # Fill the output stream with silence until we don't see any underruns
 # for a while.
 loop do
-  can_write = ::FFI::PortAudio::API.Pa_GetStreamWriteAvailable(stream.read_pointer)
+  can_write = audio.write_available
 
   next unless can_write.positive?
 
-  err = ::FFI::PortAudio::API.Pa_WriteStream(stream.read_pointer, buffer, can_write)
+  err = audio.write(buffer, can_write)
 
   err_free_count = err == :paNoError ? err_free_count + 1 : err_free_limit
 
   break if err_free_count == err_free_limit
 end
 
-puts 'END ZEROS'
-
 loop do
-  can_write = ::FFI::PortAudio::API.Pa_GetStreamWriteAvailable(stream.read_pointer)
+  can_write = audio.write_available
 
   next unless can_write.positive?
 
@@ -80,5 +66,5 @@ loop do
 
   break unless has_read.positive?
 
-  ::FFI::PortAudio::API.Pa_WriteStream(stream.read_pointer, buffer, has_read)
+  audio.write(buffer, has_read)
 end
