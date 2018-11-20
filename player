@@ -13,26 +13,16 @@ require 'bundler/setup'
 
 require 'audio/portaudio'
 require 'ffi/openmpt'
-require 'curses'
+require 'ui'
 
-Curses.init_screen
-Curses.noecho
-window = Curses.stdscr
-window.nodelay = true
 
 file = ARGV[0].chomp
 mod = ::FFI::OpenMPT::Module.new(file)
 
 audio = ModPlayer::PortAudio.new
-
-duration = mod.duration
-duration_mins = duration.floor / 60
-duration_secs = duration % 60
-
-puts mod.title
-puts "#{duration_mins}:#{duration_secs.round(3)}"
-
 audio.start
+
+ui = ModPlayer::UI.new(mod)
 
 # Set buffer to zero to begin with so we can render slience to start with.
 buffer_max_frames = audio.write_available * 2
@@ -41,8 +31,8 @@ buffer = ::FFI::MemoryPointer.new(:float, buffer_max_frames * audio.channels, tr
 at_exit do
   buffer.free
   audio.stop
+  ui.close
   mod.close
-  Curses.close_screen
 
   puts 'Module end...'
 end
@@ -64,6 +54,9 @@ loop do
   break if err_free_count == err_free_limit
 end
 
+ui.open
+ui.draw
+
 loop do
   can_write = audio.write_available
 
@@ -74,7 +67,5 @@ loop do
   break unless has_read.positive?
 
   audio.write(buffer, has_read)
-
-  ch = window.getch
-  exit if ch == 'q'
+  ui.listen
 end
