@@ -47,12 +47,7 @@ module ModPlayer
       @window.clear
 
       header
-
-      @window.setpos(5, 0)
-      @window.addstr(@mod.title)
-      @window.setpos(7, 0)
-      @window.addstr(mod_duration_string)
-
+      static_info
       footer
 
       @window.refresh
@@ -79,6 +74,21 @@ module ModPlayer
       @window.setpos(0, 0)
       @window.addstr(HEADER_TEXT.center(cols, ' '))
       @window.attrset(A_NORMAL)
+    end
+
+    def static_info
+      @window.setpos(2, 0)
+      @window.addstr("Type.......: #{@mod.type}\n")
+      @window.addstr("Format.....: #{@mod.type_long}\n")
+      @window.addstr("Tracker....: #{@mod.tracker}\n")
+      @window.addstr("Title......: #{@mod.title}\n")
+      @window.addstr("Duration...: #{mod_duration_string}\n")
+      @window.addstr("Subsongs...: #{@mod.subsongs}\n")
+      @window.addstr("Channels...: #{@mod.channels}\n")
+      @window.addstr("Patterns...: #{@mod.patterns}\n")
+      @window.addstr("Orders.....: #{@mod.orders}\n")
+      @window.addstr("Samples....: #{@mod.samples}\n")
+      @window.addstr("Instruments: #{@mod.instruments}\n")
     end
 
     def footer
