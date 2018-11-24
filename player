@@ -15,6 +15,8 @@ require 'audio/portaudio'
 require 'ffi/openmpt'
 require 'ui'
 
+saved_err = STDERR.dup
+STDERR.reopen(File.new('/dev/null', 'w'))
 
 file = ARGV[0].chomp
 mod = ::FFI::OpenMPT::Module.new(file)
@@ -29,6 +31,7 @@ buffer_max_frames = audio.write_available * 2
 buffer = ::FFI::MemoryPointer.new(:float, buffer_max_frames * audio.channels, true)
 
 at_exit do
+  STDERR.reopen(saved_err)
   buffer.free
   audio.stop
   ui.close
