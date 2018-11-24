@@ -24,7 +24,7 @@ mod = ::FFI::OpenMPT::Module.new(file)
 audio = ModPlayer::PortAudio.new
 audio.start
 
-ui = ModPlayer::UI.new(mod)
+ui = ModPlayer::UI.new(mod, file)
 
 # Set buffer to zero to begin with so we can render slience to start with.
 buffer_max_frames = audio.write_available * 2

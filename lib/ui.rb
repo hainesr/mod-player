@@ -17,8 +17,10 @@ module ModPlayer
     FOOTER_TEXT =
       "*** Version #{ModPlayer::VERSION} *** (c) Robert Haines, 2018 ***"
 
-    def initialize(mod)
+    def initialize(mod, path)
       @mod = mod
+      @mod_file = ::File.basename(path)
+      @mod_size = ::File.size(path) / 1_024
     end
 
     def open
@@ -78,11 +80,13 @@ module ModPlayer
 
     def static_info
       @window.setpos(2, 0)
-      @window.addstr("Type.......: #{@mod.type}\n")
-      @window.addstr("Format.....: #{@mod.type_long}\n")
-      @window.addstr("Tracker....: #{@mod.tracker}\n")
+      @window.addstr("Filename...: #{@mod_file}\n")
+      @window.addstr("Size.......: #{@mod_size}k\n\n")
       @window.addstr("Title......: #{@mod.title}\n")
       @window.addstr("Duration...: #{mod_duration_string}\n")
+      @window.addstr("Type.......: #{@mod.type}\n")
+      @window.addstr("Format.....: #{@mod.type_long}\n")
+      @window.addstr("Tracker....: #{@mod.tracker}\n\n")
       @window.addstr("Subsongs...: #{@mod.subsongs}\n")
       @window.addstr("Channels...: #{@mod.channels}\n")
       @window.addstr("Patterns...: #{@mod.patterns}\n")
