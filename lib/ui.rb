@@ -42,7 +42,6 @@ module ModPlayer
       ch = @window.getch
 
       exit if ch == 'q'
-      draw if ch == 'r'
     end
 
     def draw
