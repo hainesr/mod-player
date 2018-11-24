@@ -21,6 +21,8 @@ module ModPlayer
       @mod = mod
       @mod_file = ::File.basename(path)
       @mod_size = ::File.size(path) / 1_024
+
+      @help_open = false
     end
 
     def open
@@ -29,8 +31,8 @@ module ModPlayer
       curs_set(0)
       @window = Window.new(lines, cols, 0, 0)
       @window.nodelay = true
-      @centre = cols / 2
-      @middle = lines / 2
+
+      @help_win = Window.new(lines - 10, cols - 20, 5, 10)
     end
 
     def close
@@ -42,6 +44,7 @@ module ModPlayer
       ch = @window.getch
 
       exit if ch == 'q'
+      help if ch == 'h'
     end
 
     def draw
@@ -68,6 +71,20 @@ module ModPlayer
       duration = mod_duration
 
       "#{duration[0]}:#{duration[1].round(3)}"
+    end
+
+    def help
+      @help_open ? draw : draw_help
+      @help_open = !@help_open
+    end
+
+    def draw_help
+      @help_win.box('|', '-')
+      @help_win.setpos(0, 0)
+      @help_win.attrset(A_REVERSE)
+      @help_win.addstr('*** Help ***'.center(cols - 20, ' '))
+      @help_win.attrset(A_NORMAL)
+      @help_win.refresh
     end
 
     def header
