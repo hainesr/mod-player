@@ -13,7 +13,9 @@ module ModPlayer
 
     include Curses
 
-    TITLE = "Ruby Mod Player (v #{ModPlayer::VERSION})"
+    HEADER_TEXT = '*** Ruby Mod Player ***'
+    FOOTER_TEXT =
+      "*** Version #{ModPlayer::VERSION} *** (c) Robert Haines, 2018 ***"
 
     def initialize(mod)
       @mod = mod
@@ -49,7 +51,6 @@ module ModPlayer
       @window.setpos(5, 0)
       @window.addstr(@mod.title)
       @window.setpos(7, 0)
-      @window.attrset(A_NORMAL)
       @window.addstr(mod_duration_string)
 
       footer
@@ -76,14 +77,14 @@ module ModPlayer
     def header
       @window.attrset(A_REVERSE)
       @window.setpos(0, 0)
-      @window.addstr(TITLE.center(cols, ' '))
+      @window.addstr(HEADER_TEXT.center(cols, ' '))
       @window.attrset(A_NORMAL)
     end
 
     def footer
       @window.attrset(A_REVERSE)
       @window.setpos(lines - 1, 0)
-      @window.addstr(TITLE.center(cols, ' '))
+      @window.addstr(FOOTER_TEXT.center(cols, ' '))
       @window.attrset(A_NORMAL)
     end
   end
