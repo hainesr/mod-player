@@ -26,9 +26,8 @@ audio.start
 
 ui = ModPlayer::UI.new(mod, file)
 
-# Set buffer to zero to begin with so we can render slience to start with.
 buffer_max_frames = audio.write_available * 2
-buffer = ::FFI::MemoryPointer.new(:float, buffer_max_frames * audio.channels, true)
+buffer = ::FFI::MemoryPointer.new(:float, buffer_max_frames * audio.channels)
 
 at_exit do
   STDERR.reopen(saved_err)
@@ -38,23 +37,6 @@ at_exit do
   mod.close
 
   puts 'Module end...'
-end
-
-err_free_limit = 20
-err_free_count = 0
-
-# Fill the output stream with silence until we don't see any underruns
-# for a while.
-loop do
-  can_write = audio.write_available
-
-  next unless can_write.positive?
-
-  err = audio.write(buffer, can_write)
-
-  err_free_count = err == :paNoError ? err_free_count + 1 : err_free_limit
-
-  break if err_free_count == err_free_limit
 end
 
 ui.open
