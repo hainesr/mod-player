@@ -25,6 +25,8 @@ audio = ModPlayer::PortAudio.new
 audio.start
 
 ui = ModPlayer::UI.new(mod, file)
+ui.open
+ui.draw
 
 buffer_max_frames = audio.write_available * 2
 buffer = ::FFI::MemoryPointer.new(:float, buffer_max_frames * audio.channels)
@@ -38,9 +40,6 @@ at_exit do
 
   puts 'Module end...'
 end
-
-ui.open
-ui.draw
 
 loop do
   can_write = audio.write_available
