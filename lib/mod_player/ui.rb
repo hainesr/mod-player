@@ -19,6 +19,7 @@ module ModPlayer
 
     HELP_TEXT = [
       ['h', 'toggle this help screen'],
+      ['space, p', 'pause/resume playback'],
       ['q', 'quit']
     ].freeze
 
@@ -28,6 +29,7 @@ module ModPlayer
       @mod_size = ::File.size(path) / 1_024
 
       @help_open = false
+      @paused = false
     end
 
     def open
@@ -50,6 +52,7 @@ module ModPlayer
 
       exit if ch == 'q'
       help if ch == 'h'
+      @paused = !@paused if ch == 'p' || ch == ' '
     end
 
     def draw
@@ -60,6 +63,10 @@ module ModPlayer
       footer
 
       @window.refresh
+    end
+
+    def paused?
+      @paused
     end
 
     private
@@ -93,7 +100,7 @@ module ModPlayer
       line = 3
       HELP_TEXT.each do |key, text|
         @help_win.setpos(line, 2)
-        @help_win.addstr("#{key.rjust(5)} - #{text}")
+        @help_win.addstr("#{key.rjust(8)} - #{text}")
         line += 1
       end
 

@@ -41,6 +41,12 @@ at_exit do
 end
 
 loop do
+  if ui.paused?
+    sleep(1)
+    ui.listen
+    next
+  end
+
   can_write = audio.write_available
 
   next unless can_write.positive?
