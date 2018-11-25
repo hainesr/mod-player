@@ -14,8 +14,10 @@ module ModPlayer
     include Curses
 
     HEADER_TEXT = '*** Ruby Mod Player ***'
-    FOOTER_TEXT =
+    FOOTER_TEXT = [
+      "Press 'h' to toggle help; 'q' to quit",
       "*** Version #{ModPlayer::VERSION} *** (c) Robert Haines, 2018 ***"
+    ].freeze
 
     def initialize(mod, path)
       @mod = mod
@@ -112,9 +114,11 @@ module ModPlayer
     end
 
     def footer
+      @window.setpos(lines - 2, 0)
+      @window.addstr(FOOTER_TEXT[0].center(cols))
       @window.attrset(A_REVERSE)
       @window.setpos(lines - 1, 0)
-      @window.addstr(FOOTER_TEXT.center(cols, ' '))
+      @window.addstr(FOOTER_TEXT[1].center(cols, ' '))
       @window.attrset(A_NORMAL)
     end
   end
