@@ -19,6 +19,11 @@ module ModPlayer
       "*** Version #{ModPlayer::VERSION} *** (c) Robert Haines, 2018 ***"
     ].freeze
 
+    HELP_TEXT = [
+      ['h', 'toggle this help screen'],
+      ['q', 'quit']
+    ].freeze
+
     def initialize(mod, path)
       @mod = mod
       @mod_file = ::File.basename(path)
@@ -86,6 +91,14 @@ module ModPlayer
       @help_win.attrset(A_REVERSE)
       @help_win.addstr('*** Help ***'.center(cols - 20, ' '))
       @help_win.attrset(A_NORMAL)
+
+      line = 3
+      HELP_TEXT.each do |key, text|
+        @help_win.setpos(line, 2)
+        @help_win.addstr("#{key.rjust(5)} - #{text}")
+        line += 1
+      end
+
       @help_win.refresh
     end
 
