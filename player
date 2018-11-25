@@ -10,10 +10,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'rubygems'
 require 'bundler/setup'
-
-require 'audio/portaudio'
 require 'ffi/openmpt'
-require 'ui'
+
+require 'mod_player/audio/portaudio'
+require 'mod_player/ui'
 
 saved_err = STDERR.dup
 STDERR.reopen(File.new('/dev/null', 'w'))

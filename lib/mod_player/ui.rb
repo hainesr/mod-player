@@ -6,7 +6,7 @@
 
 require 'curses'
 
-require 'version'
+require 'mod_player/version'
 
 module ModPlayer
   class UI

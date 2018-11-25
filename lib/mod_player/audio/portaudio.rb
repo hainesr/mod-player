@@ -4,7 +4,7 @@
 #
 # Licensed under the BSD License. See LICENCE for details.
 
-require 'audio'
+require 'mod_player/audio'
 require 'ffi-portaudio'
 
 module ModPlayer
