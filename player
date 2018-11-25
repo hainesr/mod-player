@@ -12,8 +12,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'ffi/openmpt'
 
-require 'mod_player/audio/portaudio'
-require 'mod_player/ui'
+require 'mod_player/player'
 
 saved_err = STDERR.dup
 STDERR.reopen(File.new('/dev/null', 'w'))
