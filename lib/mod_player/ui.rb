@@ -58,9 +58,9 @@ module ModPlayer
     def draw
       @window.clear
 
-      header
-      static_info
-      footer
+      draw_header
+      draw_static_info
+      draw_footer
 
       @window.refresh
     end
@@ -107,14 +107,14 @@ module ModPlayer
       @help_win.refresh
     end
 
-    def header
+    def draw_header
       @window.attrset(A_REVERSE)
       @window.setpos(0, 0)
       @window.addstr(HEADER_TEXT.center(cols, ' '))
       @window.attrset(A_NORMAL)
     end
 
-    def static_info
+    def draw_static_info
       @window.setpos(2, 0)
       @window.addstr("Filename...: #{@mod_file}\n")
       @window.addstr("Size.......: #{@mod_size}k\n\n")
@@ -131,7 +131,7 @@ module ModPlayer
       @window.addstr("Instruments: #{@mod.instruments}\n")
     end
 
-    def footer
+    def draw_footer
       @window.setpos(lines - 2, 0)
       @window.addstr(FOOTER_TEXT[0].center(cols))
       @window.attrset(A_REVERSE)
