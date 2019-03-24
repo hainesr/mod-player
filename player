@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-# Copyright (c) 2018 Robert Haines.
+# Copyright (c) 2018, 2019 Robert Haines.
 #
 # Licensed under the BSD License. See LICENCE for details.
 
@@ -14,16 +14,16 @@ require 'ffi/openmpt'
 
 require 'mod_player/player'
 
+options = ModPlayer::Player.read_opts(ARGV)
+mod = ::FFI::OpenMPT::Module.new(options[:file])
+
 saved_err = STDERR.dup
 STDERR.reopen(File.new('/dev/null', 'w'))
-
-file = ARGV[0].chomp
-mod = ::FFI::OpenMPT::Module.new(file)
 
 audio = ModPlayer::PortAudio.new
 audio.start
 
-ui = ModPlayer::UI.new(mod, file)
+ui = ModPlayer::UI.new(mod, options[:file])
 ui.open
 ui.draw
 
