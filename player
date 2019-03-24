@@ -16,6 +16,7 @@ require 'mod_player/player'
 
 options = ModPlayer::Player.read_opts(ARGV)
 mod = ::FFI::OpenMPT::Module.new(options[:file])
+mod.repeat_count = options[:repeat]
 
 saved_err = STDERR.dup
 STDERR.reopen(File.new('/dev/null', 'w'))
