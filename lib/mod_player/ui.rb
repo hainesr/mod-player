@@ -16,7 +16,7 @@ module ModPlayer
     HEADER_TEXT = '*** Ruby Mod Player ***'
     FOOTER_TEXT = [
       "Press 'h' to toggle help; 'q' to quit",
-      "*** Version #{ModPlayer::VERSION} *** (c) Robert Haines, 2018 ***"
+      "*** Version #{ModPlayer::VERSION} *** (c) Robert Haines, 2018, 2019 ***"
     ].freeze
 
     HELP_TEXT = [
