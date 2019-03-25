@@ -19,7 +19,7 @@ module ModPlayer
     def initialize(options)
       init_mod(options)
       init_audio
-      init_ui(options[:file])
+      init_ui
     end
 
     def stop
@@ -96,8 +96,8 @@ module ModPlayer
                                          buffer_max_frames * @audio.channels)
     end
 
-    def init_ui(file)
-      @ui = ModPlayer::UI.new(@mod, file)
+    def init_ui
+      @ui = ModPlayer::UI.new(@mod)
       @ui.open
       @ui.draw
     end

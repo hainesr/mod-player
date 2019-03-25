@@ -25,10 +25,8 @@ module ModPlayer
       ['q', 'quit']
     ].freeze
 
-    def initialize(mod, path)
+    def initialize(mod)
       @mod = mod
-      @mod_file = ::File.basename(path)
-      @mod_size = ::File.size(path) / 1_024
 
       @help_open = false
       @paused = false
@@ -118,8 +116,6 @@ module ModPlayer
 
     def draw_static_info
       @window.setpos(2, 0)
-      @window.addstr("Filename...: #{@mod_file}\n")
-      @window.addstr("Size.......: #{@mod_size}k\n\n")
       @window.addstr("Title......: #{@mod.title}\n")
       @window.addstr("Duration...: #{mod_duration_string}\n")
       @window.addstr("Type.......: #{@mod.type}\n")
