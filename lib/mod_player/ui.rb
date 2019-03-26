@@ -22,7 +22,7 @@ module ModPlayer
     HELP_TEXT = [
       ['h', 'toggle this help screen'],
       ['space, p', 'pause/resume playback'],
-      ['q', 'quit']
+      ['esc, q', 'quit']
     ].freeze
 
     def initialize(mod)
@@ -53,7 +53,7 @@ module ModPlayer
         help
       when 'p', ' '
         @paused = !@paused
-      when 'q'
+      when 'q', 27 # ESC
         exit
       end
     end
