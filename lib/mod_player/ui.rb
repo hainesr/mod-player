@@ -48,11 +48,14 @@ module ModPlayer
     end
 
     def listen
-      ch = @window.getch
-
-      exit if ch == 'q'
-      help if ch == 'h'
-      @paused = !@paused if ch == 'p' || ch == ' '
+      case @window.getch
+      when 'h'
+        help
+      when 'p', ' '
+        @paused = !@paused
+      when 'q'
+        exit
+      end
     end
 
     def draw
