@@ -7,6 +7,7 @@
 require 'curses'
 
 require 'mod_player/ui'
+require 'mod_player/ui/help_screen'
 require 'mod_player/ui/samples_list'
 
 module ModPlayer
@@ -16,8 +17,6 @@ module ModPlayer
 
       def initialize(mod)
         @mod = mod
-
-        @help_open = false
         @paused = false
       end
 
@@ -28,7 +27,7 @@ module ModPlayer
         @window = Window.new(lines, cols, 0, 0)
         @window.nodelay = true
 
-        @help_win = Window.new(lines - 10, cols - 20, 5, 10)
+        @help = HelpScreen.new(self)
         @samples = SamplesList.new(self, @mod)
       end
 
@@ -40,7 +39,7 @@ module ModPlayer
       def listen
         case @window.getch
         when 'h'
-          help
+          @help.toggle
         when 'p', ' '
           @paused = !@paused
         when 'q', 27 # ESC
@@ -78,28 +77,6 @@ module ModPlayer
         duration = mod_duration
 
         "#{duration[0]}:#{duration[1].round(3)}"
-      end
-
-      def help
-        @help_open ? draw : draw_help
-        @help_open = !@help_open
-      end
-
-      def draw_help
-        @help_win.box('|', '-')
-        @help_win.setpos(0, 0)
-        @help_win.attrset(A_REVERSE)
-        @help_win.addstr('*** Help ***'.center(cols - 20, ' '))
-        @help_win.attrset(A_NORMAL)
-
-        line = 3
-        HELP_TEXT.each do |key, text|
-          @help_win.setpos(line, 2)
-          @help_win.addstr("#{key.rjust(8)} - #{text}")
-          line += 1
-        end
-
-        @help_win.refresh
       end
 
       def draw_header

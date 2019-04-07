@@ -14,6 +14,7 @@ module ModPlayer
       "*** Version #{ModPlayer::VERSION} *** (c) Robert Haines, 2018, 2019 ***"
     ].freeze
 
+    HELP_TITLE = 'Help'
     HELP_TEXT = [
       ['h', 'toggle this help screen'],
       ['space, p', 'pause/resume playback'],
