@@ -11,7 +11,7 @@ require 'ffi/openmpt'
 require 'mod_player/version'
 require 'mod_player/audio'
 require 'mod_player/audio/portaudio'
-require 'mod_player/ui'
+require 'mod_player/ui/root'
 
 module ModPlayer
   class Player
@@ -97,7 +97,7 @@ module ModPlayer
     end
 
     def init_ui
-      @ui = ModPlayer::UI.new(@mod)
+      @ui = ModPlayer::UI::Root.new(@mod)
       @ui.open
       @ui.draw
     end
