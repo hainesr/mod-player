@@ -124,12 +124,12 @@ module ModPlayer
       @window.addstr("Type.......: #{@mod.type}\n")
       @window.addstr("Format.....: #{@mod.type_long}\n")
       @window.addstr("Tracker....: #{@mod.tracker}\n\n")
-      @window.addstr("Subsongs...: #{@mod.subsongs}\n")
-      @window.addstr("Channels...: #{@mod.channels}\n")
-      @window.addstr("Patterns...: #{@mod.patterns}\n")
-      @window.addstr("Orders.....: #{@mod.orders}\n")
-      @window.addstr("Samples....: #{@mod.samples}\n")
-      @window.addstr("Instruments: #{@mod.instruments}\n")
+      @window.addstr("Subsongs...: #{@mod.num_subsongs}\n")
+      @window.addstr("Channels...: #{@mod.num_channels}\n")
+      @window.addstr("Patterns...: #{@mod.num_patterns}\n")
+      @window.addstr("Orders.....: #{@mod.num_orders}\n")
+      @window.addstr("Samples....: #{@mod.num_samples}\n")
+      @window.addstr("Instruments: #{@mod.num_instruments}\n")
     end
 
     def draw_footer
