@@ -19,9 +19,12 @@ module ModPlayer
         line = 3
         HELP_TEXT.each do |key, text|
           setpos(line, 2)
-          addstr("#{key.rjust(8)} - #{text}")
+          addstr("#{key.rjust(10)} - #{text}")
           line += 1
         end
+
+        setpos(maxy - 2, 2)
+        addstr("libopenmpt - #{::FFI::OpenMPT::String.get(:library_version)}")
       end
     end
   end
