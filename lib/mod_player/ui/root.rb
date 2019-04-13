@@ -15,6 +15,8 @@ module ModPlayer
     class Root
       include Curses
 
+      attr_reader :mod
+
       def initialize(mod)
         @mod = mod
         @paused = false
@@ -28,7 +30,7 @@ module ModPlayer
         @window.nodelay = true
 
         @help = HelpScreen.new(self)
-        @samples = SamplesList.new(self, @mod)
+        @samples = SamplesList.new(self)
       end
 
       def close
