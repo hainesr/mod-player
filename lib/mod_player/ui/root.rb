@@ -8,7 +8,7 @@ require 'curses'
 
 require 'mod_player/ui'
 require 'mod_player/ui/help_screen'
-require 'mod_player/ui/samples_list'
+require 'mod_player/ui/names_list'
 
 module ModPlayer
   module UI
@@ -30,7 +30,7 @@ module ModPlayer
         @window.nodelay = true
 
         @help = HelpScreen.new(self)
-        @samples = SamplesList.new(self)
+        @samples = NamesList.new(self, 'sample', 1)
       end
 
       def close

@@ -21,7 +21,5 @@ module ModPlayer
       ['s', 'show sample names'],
       ['esc, q', 'quit']
     ].freeze
-
-    SAMPLES_TITLE = 'Samples'
   end
 end
