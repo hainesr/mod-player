@@ -23,8 +23,11 @@ module ModPlayer
           line += 1
         end
 
+        setpos(maxy - 3, 2)
+        addstr(" libopenmpt version: " \
+          "#{::FFI::OpenMPT::String.get(:library_version)}")
         setpos(maxy - 2, 2)
-        addstr("libopenmpt - #{::FFI::OpenMPT::String.get(:library_version)}")
+        addstr("ffi-openmpt version: #{::FFI::OpenMPT::VERSION}")
       end
     end
   end
