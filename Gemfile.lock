@@ -3,7 +3,7 @@ GEM
   specs:
     curses (1.2.7)
     ffi (1.10.0)
-    ffi-openmpt (0.4.1)
+    ffi-openmpt (0.5.0)
       ffi (~> 1.9)
     ffi-portaudio (0.1.2)
       ffi
@@ -13,7 +13,7 @@ PLATFORMS
 
 DEPENDENCIES
   curses (~> 1.2)
-  ffi-openmpt (~> 0.4.1)
+  ffi-openmpt (~> 0.5)
   ffi-portaudio (~> 0.1)
 
 BUNDLED WITH
