@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2018, 2019 Robert Haines.
+# Copyright (c) 2018-2020 Robert Haines.
 #
 # Licensed under the BSD License. See LICENCE for details.
 
@@ -8,10 +8,10 @@ require 'optparse'
 
 require 'ffi/openmpt'
 
-require 'mod_player/version'
-require 'mod_player/audio'
-require 'mod_player/audio/portaudio'
-require 'mod_player/ui/root'
+require_relative 'version'
+require_relative 'audio'
+require_relative 'audio/portaudio'
+require_relative 'ui/root'
 
 module ModPlayer
   class Player

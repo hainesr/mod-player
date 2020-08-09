@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2018, 2019 Robert Haines.
+# Copyright (c) 2018-2020 Robert Haines.
 #
 # Licensed under the BSD License. See LICENCE for details.
 
 module ModPlayer
-  VERSION = '0.0.2'
+  VERSION = '0.0.3'
 end

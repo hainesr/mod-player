@@ -1,17 +1,14 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-# Copyright (c) 2018, 2019 Robert Haines.
+# Copyright (c) 2018-2020 Robert Haines.
 #
 # Licensed under the BSD License. See LICENCE for details.
-
-lib = File.expand_path('lib', __dir__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'rubygems'
 require 'bundler/setup'
 
-require 'mod_player/player'
+require_relative 'lib/mod_player/player'
 
 options = ModPlayer::Player.read_opts(ARGV)
 

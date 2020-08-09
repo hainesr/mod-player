@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2019 Robert Haines.
+# Copyright (c) 2019, 2020 Robert Haines.
 #
 # Licensed under the BSD License. See LICENCE for details.
 
 require 'curses'
 
-require 'mod_player/ui'
-require 'mod_player/ui/help_screen'
-require 'mod_player/ui/names_list'
+require_relative 'constants'
+require_relative 'help_screen'
+require_relative 'names_list'
 
 module ModPlayer
   module UI
