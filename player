@@ -8,9 +8,10 @@
 require 'rubygems'
 require 'bundler/setup'
 
+require_relative 'lib/mod_player/options'
 require_relative 'lib/mod_player/player'
 
-options = ModPlayer::Player.read_opts(ARGV)
+options = ModPlayer::Options.read_opts(ARGV)
 
 saved_err = STDERR.dup
 STDERR.reopen(File.new('/dev/null', 'w'))
