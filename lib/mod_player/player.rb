@@ -34,11 +34,9 @@ module ModPlayer
         end
 
         can_write = @audio.write_available
-
         next unless can_write.positive?
 
         has_read = @mod.read_interleaved_float_stereo(can_write, @buffer)
-
         break unless has_read.positive?
 
         @audio.write(@buffer, has_read)
