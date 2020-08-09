@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2018 Robert Haines.
+# Copyright (c) 2018-2020 Robert Haines.
 #
 # Licensed under the BSD License. See LICENCE for details.
 
@@ -8,7 +8,6 @@ require 'ffi-portaudio'
 
 module ModPlayer
   class PortAudio < Audio
-
     include FFI::PortAudio
 
     PA_FORMAT = {

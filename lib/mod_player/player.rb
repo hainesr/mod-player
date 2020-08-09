@@ -12,7 +12,6 @@ require_relative 'ui/root'
 
 module ModPlayer
   class Player
-
     def initialize(options)
       init_mod(options)
       init_audio

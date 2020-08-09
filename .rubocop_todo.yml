@@ -6,16 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
-Layout/EmptyLinesAroundClassBody:
-  Exclude:
-    - 'lib/mod_player/audio.rb'
-    - 'lib/mod_player/audio/portaudio.rb'
-    - 'lib/mod_player/player.rb'
-
 # Offense count: 2
 # Configuration parameters: IgnoredMethods.
 Metrics/AbcSize:
