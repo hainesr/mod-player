@@ -16,14 +16,6 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Max: 20
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: separated, grouped
-Style/AccessorGrouping:
-  Exclude:
-    - 'lib/mod_player/audio.rb'
-
 # Offense count: 8
 Style/Documentation:
   Exclude:

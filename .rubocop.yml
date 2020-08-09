@@ -1,5 +1,9 @@
 inherit_from: .rubocop_todo.yml
 
+Style/AccessorGrouping:
+  Enabled: true
+  EnforcedStyle: separated
+
 Layout/EmptyLinesAroundAttributeAccessor:
  Enabled: true
 
@@ -46,9 +50,6 @@ Lint/TopLevelReturnWithArgument:
  Enabled: true
 
 Lint/UnreachableLoop:
- Enabled: true
-
-Style/AccessorGrouping:
  Enabled: true
 
 Style/ArrayCoercion:
