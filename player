@@ -13,13 +13,13 @@ require_relative 'lib/mod_player/player'
 
 options = ModPlayer::Options.read_opts(ARGV)
 
-saved_err = STDERR.dup
-STDERR.reopen(File.new('/dev/null', 'w'))
+saved_err = $stderr.dup
+$stderr.reopen(File.new('/dev/null', 'w'))
 
 player = ModPlayer::Player.new(options)
 
 at_exit do
-  STDERR.reopen(saved_err)
+  $stderr.reopen(saved_err)
   player.stop
 end
 
