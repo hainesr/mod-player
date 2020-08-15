@@ -15,6 +15,7 @@ module ModPlayer
     HELP_TITLE = 'Help'
     HELP_TEXT = [
       ['h', 'toggle this help screen'],
+      ['i', 'show instrument names'],
       ['space, p', 'pause/resume playback'],
       ['s', 'show sample names'],
       ['esc, q', 'quit']

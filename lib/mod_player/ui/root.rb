@@ -30,6 +30,7 @@ module ModPlayer
         @window.nodelay = true
 
         @help = HelpScreen.new(self)
+        @instruments = NamesList.new(self, 'instrument', 1)
         @samples = NamesList.new(self, 'sample', 1)
       end
 
@@ -42,6 +43,8 @@ module ModPlayer
         case @window.getch
         when 'h'
           @help.toggle
+        when 'i'
+          @instruments.toggle
         when 'p', ' '
           @paused = !@paused
         when 'q', 27 # ESC
