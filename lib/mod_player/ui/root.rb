@@ -32,6 +32,7 @@ module ModPlayer
         @help = HelpScreen.new(self)
         @instruments = NamesList.new(self, 'instrument', 1)
         @samples = NamesList.new(self, 'sample', 1)
+        @dialogs = [@help, @instruments, @samples]
       end
 
       def close
@@ -42,15 +43,15 @@ module ModPlayer
       def listen
         case @window.getch
         when 'h'
-          @help.toggle
+          toggle_dialog(@help)
         when 'i'
-          @instruments.toggle
+          toggle_dialog(@instruments)
         when 'p', ' '
           @paused = !@paused
         when 'q', 27 # ESC
           exit
         when 's'
-          @samples.toggle
+          toggle_dialog(@samples)
         end
       end
 
@@ -69,6 +70,14 @@ module ModPlayer
       end
 
       private
+
+      def toggle_dialog(dialog)
+        # This dance allows us to open dialogs on top of already open
+        # dialogs and still retain some semblance of expected behaviour.
+        open = dialog.open?
+        @dialogs.each { |d| d.close }
+        dialog.open unless open
+      end
 
       def mod_duration
         duration = @mod.duration

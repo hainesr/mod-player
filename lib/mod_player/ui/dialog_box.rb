@@ -29,9 +29,14 @@ module ModPlayer
         refresh
       end
 
-      def toggle
-        @open ? @parent.draw : draw
-        @open = !@open
+      def open
+        draw
+        @open = true
+      end
+
+      def close
+        @parent.draw
+        @open = false
       end
 
       def open?
