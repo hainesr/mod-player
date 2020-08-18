@@ -41,6 +41,7 @@ module ModPlayer
 
         @audio.write(@buffer, has_read)
         @ui.listen
+        @ui.update
       end
     end
 

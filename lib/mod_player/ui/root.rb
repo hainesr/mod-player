@@ -20,6 +20,7 @@ module ModPlayer
       def initialize(mod)
         @mod = mod
         @paused = false
+        @occluded = false
       end
 
       def open
@@ -65,6 +66,13 @@ module ModPlayer
         @window.refresh
       end
 
+      def update
+        return if @occluded || @paused
+
+        @window.setpos(15, 0)
+        @window.addstr("Position...: #{print_time(@mod.position)}")
+      end
+
       def paused?
         @paused
       end
@@ -77,6 +85,7 @@ module ModPlayer
         open = dialog.open?
         @dialogs.each { |d| d.close }
         dialog.open unless open
+        @occluded = !open
       end
 
       def print_time(time)
