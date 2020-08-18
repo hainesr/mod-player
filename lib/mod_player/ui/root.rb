@@ -79,18 +79,8 @@ module ModPlayer
         dialog.open unless open
       end
 
-      def mod_duration
-        duration = @mod.duration
-        duration_mins = duration.floor / 60
-        duration_secs = duration % 60
-
-        [duration_mins, duration_secs]
-      end
-
-      def mod_duration_string
-        duration = mod_duration
-
-        "#{duration[0]}:#{duration[1].round(3)}"
+      def print_time(time)
+        Time.at(time).strftime("%M:%S.%L")
       end
 
       def draw_header
@@ -103,7 +93,7 @@ module ModPlayer
       def draw_static_info
         @window.setpos(2, 0)
         @window.addstr("Title......: #{@mod.title}\n")
-        @window.addstr("Duration...: #{mod_duration_string}\n")
+        @window.addstr("Duration...: #{print_time(@mod.duration)}\n")
         @window.addstr("Type.......: #{@mod.type}\n")
         @window.addstr("Format.....: #{@mod.type_long}\n")
         @window.addstr("Tracker....: #{@mod.tracker}\n\n")
