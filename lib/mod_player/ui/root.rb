@@ -101,7 +101,7 @@ module ModPlayer
       end
 
       def print_time(time)
-        Time.at(time).strftime("%M:%S.%L")
+        Time.at(time).strftime('%M:%S.%L')
       end
 
       def draw_header
