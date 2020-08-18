@@ -11,9 +11,10 @@ module ModPlayer
     class NamesList < DialogBox
       COLUMN_BREAK = 15
 
-      def initialize(parent, type, base_index = 0)
-        super(parent, "#{type}s".capitalize, 20, 60)
+      def initialize(mod, type, base_index = 0)
+        super("#{type}s".capitalize, 20, 60)
 
+        @mod = mod
         @method = "#{type}_names".to_sym
         @base_index = base_index
         @none_msg = "No #{type}s..."
@@ -22,7 +23,7 @@ module ModPlayer
       private
 
       def draw_content
-        names = @parent.mod.send(@method)
+        names = @mod.send(@method)
 
         if names.length.zero?
           setpos(2, 2)

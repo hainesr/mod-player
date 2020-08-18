@@ -9,14 +9,12 @@ require 'curses'
 module ModPlayer
   module UI
     class DialogBox < Curses::Window
-      def initialize(parent, title, height, width)
+      def initialize(title, height, width)
         y = (Curses.lines - height) / 2
         x = (Curses.cols - width) / 2
         super(height, width, y, x)
 
-        @parent = parent
         @title = title
-        @open = false
       end
 
       def draw
@@ -27,20 +25,6 @@ module ModPlayer
         draw_footer
 
         refresh
-      end
-
-      def open
-        draw
-        @open = true
-      end
-
-      def close
-        @parent.draw
-        @open = false
-      end
-
-      def open?
-        @open
       end
 
       private

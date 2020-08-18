@@ -9,8 +9,8 @@ require_relative 'dialog_box'
 module ModPlayer
   module UI
     class HelpScreen < DialogBox
-      def initialize(parent)
-        super(parent, HELP_TITLE, 14, 60)
+      def initialize
+        super(HELP_TITLE, 14, 60)
       end
 
       private

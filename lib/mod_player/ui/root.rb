@@ -20,7 +20,7 @@ module ModPlayer
       def initialize(mod)
         @mod = mod
         @paused = false
-        @occluded = false
+        @occluded = nil
       end
 
       def open
@@ -30,10 +30,9 @@ module ModPlayer
         @window = Window.new(lines, cols, 0, 0)
         @window.nodelay = true
 
-        @help = HelpScreen.new(self)
-        @instruments = NamesList.new(self, 'instrument', 1)
-        @samples = NamesList.new(self, 'sample', 1)
-        @dialogs = [@help, @instruments, @samples]
+        @help = HelpScreen.new
+        @instruments = NamesList.new(@mod, 'instrument', 1)
+        @samples = NamesList.new(@mod, 'sample', 1)
       end
 
       def close
@@ -61,13 +60,14 @@ module ModPlayer
 
         draw_header
         draw_static_info
+        update
         draw_footer
 
         @window.refresh
       end
 
       def update
-        return if @occluded || @paused
+        return if @occluded
 
         @window.setpos(15, 0)
         @window.addstr("Position...: #{print_time(@mod.position)}")
@@ -82,10 +82,20 @@ module ModPlayer
       def toggle_dialog(dialog)
         # This dance allows us to open dialogs on top of already open
         # dialogs and still retain some semblance of expected behaviour.
-        open = dialog.open?
-        @dialogs.each { |d| d.close }
-        dialog.open unless open
-        @occluded = !open
+        if @occluded.nil?
+          dialog.draw
+          @occluded = dialog
+        elsif @occluded == dialog
+          @occluded = nil
+          draw
+        else
+          # Set to nil briefly so dynamic parts of the UI don't disappear.
+          # We need to redraw the root window to erase the open dialog box.
+          @occluded = nil
+          draw
+          dialog.draw
+          @occluded = dialog
+        end
       end
 
       def print_time(time)
