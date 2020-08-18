@@ -19,6 +19,7 @@ module ModPlayer
 
       def initialize(mod)
         @mod = mod
+        @duration = print_time(@mod.duration)
         @paused = false
         @occluded = nil
       end
@@ -71,6 +72,7 @@ module ModPlayer
 
         @window.setpos(15, 0)
         @window.addstr("Position...: #{print_time(@mod.position)}")
+        @window.addstr(" / #{@duration}")
       end
 
       def paused?
@@ -112,7 +114,6 @@ module ModPlayer
       def draw_static_info
         @window.setpos(2, 0)
         @window.addstr("Title......: #{@mod.title}\n")
-        @window.addstr("Duration...: #{print_time(@mod.duration)}\n")
         @window.addstr("Type.......: #{@mod.type}\n")
         @window.addstr("Format.....: #{@mod.type_long}\n")
         @window.addstr("Tracker....: #{@mod.tracker}\n\n")
