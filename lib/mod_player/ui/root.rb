@@ -19,6 +19,7 @@ module ModPlayer
 
       def initialize(mod)
         @mod = mod
+        @channels = @mod.num_channels
         @duration = print_time(@mod.duration)
         @paused = false
         @occluded = nil
@@ -72,7 +73,9 @@ module ModPlayer
 
         @window.setpos(15, 0)
         @window.addstr("Position...: #{print_time(@mod.position)}")
-        @window.addstr(" / #{@duration}")
+        @window.addstr(" / #{@duration}\n\n")
+        l, r = vu_meters
+        @window.addstr("       Left: #{l}\n      Right: #{r}\n")
       end
 
       def paused?
@@ -104,6 +107,20 @@ module ModPlayer
         Time.at(time).strftime('%M:%S.%L')
       end
 
+      def vu_meters
+        left = 0
+        right = 0
+        multiplier = 60 / @channels
+
+        (0..@channels).each do |i|
+          l, r = @mod.current_channel_vu_stereo(i)
+          left += l * multiplier
+          right += r * multiplier
+        end
+
+        ['|' * left, '|' * right]
+      end
+
       def draw_header
         @window.attrset(A_REVERSE)
         @window.setpos(0, 0)
@@ -118,7 +135,7 @@ module ModPlayer
         @window.addstr("Format.....: #{@mod.type_long}\n")
         @window.addstr("Tracker....: #{@mod.tracker}\n\n")
         @window.addstr("Subsongs...: #{@mod.num_subsongs}\n")
-        @window.addstr("Channels...: #{@mod.num_channels}\n")
+        @window.addstr("Channels...: #{@channels}\n")
         @window.addstr("Patterns...: #{@mod.num_patterns}\n")
         @window.addstr("Orders.....: #{@mod.num_orders}\n")
         @window.addstr("Samples....: #{@mod.num_samples}\n")
